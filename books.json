@@ -1,0 +1,133 @@
+[
+    
+ {
+  "title": "Atomic Habits",
+  "author": "James Clear",
+  "language": "English",
+  "genre":[
+    "Self-help",
+    "Psychology"
+  ],
+  "pages": 320,
+  "price": 499,
+  "ratings": 4.5
+},
+
+ {
+  "title": "The Subtle Art of Not Giving a F*ck",
+  "author": "Mark Manson",
+  "language": "English",
+  "genre":[
+    "Self-help",
+    "Motivation"
+  ],
+  "pages": 224,
+  "price": 1299,
+  "ratings": 4.2
+},
+
+ {
+  "title": "Mindset: The New Psychology of Success",
+  "author": "Carol S. Dweck",
+  "language": "English",
+  "genre":[
+    "Self-help",
+    "Psychology"
+  ],
+  "pages": 320,
+  "price": 499,
+  "ratings": 4.3
+},
+
+ {
+  "title": "The 7 Habits of Highly Effective People",
+  "author": "Stephen R. Covey",
+  "language": "English",
+  "genre":[
+    "Self-help",
+    "Business"
+  ],
+  "pages": 432,
+  "price": 699,
+  "ratings": 4.6
+},
+
+ {
+  "title": "How to Win Friends and Influence People",
+  "author": "Dale Carnegie",
+  "language": "English",
+  "genre": [
+    "Self-help",
+    "Communication"
+  ],
+  "pages": 288,
+  "price": 999,
+  "ratings": 4.7
+},
+
+{
+  "title": "The Four Agreements",
+  "author": "Don Miguel Ruiz",
+  "language": "English",
+  "genre": [
+    "Self-help",
+    "Motivation"
+  ],
+  "pages": 160,
+  "price": 1199,
+  "ratings": 4.5
+},
+
+{
+  "title": "Thinking, Fast and Slow",
+  "author": "Daniel Kahneman",
+  "language": "English",
+  "genre": [
+    "Self-help",
+    "Motivation"
+  ],
+  "pages": 512,
+  "price": 1399,
+  "ratings": 4.1
+},
+
+ {
+  "title": "The Power of Habit",
+  "author": "Charles Duhigg",
+  "language": "English",
+  "genre": [
+    "Self-help",
+    "Motivation"
+  ],
+  "pages": 400,
+  "price": 1499,
+  "ratings": 4.4
+},
+
+ {
+  "title": "Grit: The Power of Passion and Perseverance",
+  "author": "Angela Duckworth",
+  "language": "English",
+  "genre":[
+    "Self-help",
+    "Motivation"
+  ],
+  "pages": 352,
+  "price": 1799,
+  "ratings": 4.3
+},
+
+ {
+  "title": "The Happiness Advantage",
+  "author": "Shawn Achor",
+  "language": "English",
+  "genre": [
+    "Self-help",
+    "Non-fiction"
+  ],
+  "pages": 256,
+  "price": 1699,
+  "ratings": 4.6
+}
+
+]
