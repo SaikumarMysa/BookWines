@@ -98,8 +98,6 @@ exports.getAllBooks =async(req,res) => {
     }
 }
 
-
-//GetById
 exports.getBook=async(req,res)=>{
     try{
         const book=await Book.findById(req.params.id)
@@ -164,8 +162,7 @@ exports.deleteBook=async(req,res)=>{
         res.status(200).json({
             status:'success',
             data:
-                null
-            
+                null  
         })
     }catch(err){
         res.status(404).json({
