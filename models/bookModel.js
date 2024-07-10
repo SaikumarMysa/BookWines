@@ -1,10 +1,9 @@
-const mongoose=require('mongoose');
-const bookSchema=new mongoose.Schema({
+const mongoose = require('mongoose');
+const bookSchema = new mongoose.Schema({
     title:{
         type:String,
         required:[true,'A book must have a title'],
-        unique:true
-        
+        unique:true    
     },
     author:{
         type:String,
@@ -41,5 +40,5 @@ const bookSchema=new mongoose.Schema({
         trim:true
     }
 })
-const Book=mongoose.model('Book',bookSchema);
-module.exports=Book;
+const Book = mongoose.model('Book',bookSchema);
+module.exports = Book;

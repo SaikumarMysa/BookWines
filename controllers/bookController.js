@@ -1,9 +1,11 @@
 const Book=require('../models/bookModel');
+
 const APIFeatures=require('../utils/apiFeatures');
+
 exports.getBookByGenre=async(req,res)=>{
     try {
-        const genre=req.params.genre;
-        const books=await Book.aggregate([
+        const genre = req.params.genre;
+        const books = await Book.aggregate([
             {
                 $unwind:'$genre'
             },
@@ -21,8 +23,6 @@ exports.getBookByGenre=async(req,res)=>{
             {
                 $project:{"genre":1,"books":1}
                     
-                //to display any field pass a value as 1,or use 0 to reject
-                //{ $project: { "<field1>": 0, "<field2>": 0, ... } } 
             },
             {
                 $sort:{count:-1}
@@ -32,11 +32,10 @@ exports.getBookByGenre=async(req,res)=>{
         res.status(200).json({
             status:'success',
             data:{
-                Results:books.length,
+                Results: books.length,
                 books
             }
-        })
-        
+        })   
     } catch (err) {
         res.status(404).json({
             status:'fail',
@@ -44,6 +43,7 @@ exports.getBookByGenre=async(req,res)=>{
         })
     }
 }
+
 exports.getBookStats=async(req,res)=>{
     try {
         const stats=await Book.aggregate([
@@ -75,18 +75,19 @@ exports.getBookStats=async(req,res)=>{
         
     }
 }
-exports.getAllBooks =async(req,res) => {
+//Retrieve All Books
+exports.getAllBooks = async(req,res) => {
     try {
-      const features=new APIFeatures(Book.find(),req.query)
+      const features = new APIFeatures(Book.find(),req.query)
       .filter()
       .sort()
       .limitFields()
       .paginate()
-      let books=await features.query
+      let books = await features.query
         res.status(200).json({
             status: 'success',
+            results: books.length,
             data: {
-                Results: books.length,
                 books
             }
         })
@@ -98,9 +99,9 @@ exports.getAllBooks =async(req,res) => {
     }
 }
 
-exports.getBook=async(req,res)=>{
+exports.getBook = async(req,res)=>{
     try{
-        const book=await Book.findById(req.params.id)
+        const book = await Book.findById(req.params.id)
         res.status(200).json({
             status:'success',
             data:{
@@ -120,7 +121,7 @@ exports.getBook=async(req,res)=>{
 //create
 exports.createBook=async(req,res)=>{
     try{
-       const newBook= await Book.create(req.body);
+       const newBook = await Book.create(req.body);
        res.status(201).json({
         status:'success',
         data:{
@@ -134,13 +135,15 @@ exports.createBook=async(req,res)=>{
         })
     }
 }
+
 //Update
-exports.updateBook=async(req,res)=>{
+exports.updateBook = async(req,res)=>{
     try{
-        const book=await Book.findByIdAndUpdate(req.params.id,req.body,{
+        const book = await Book.findByIdAndUpdate(req.params.id,req.body,{
             new:true,
             runValidators:true
         })
+
         res.status(200).json({
             status:'success',
             data:{
@@ -155,14 +158,13 @@ exports.updateBook=async(req,res)=>{
 
     }
 }
+
 //Delete
-exports.deleteBook=async(req,res)=>{
+exports.deleteBook = async(req,res)=>{
     try{
-        const book=await Book.findByIdAndDelete(req.params.id);
+        const book = await Book.findByIdAndDelete(req.params.id);
         res.status(200).json({
-            status:'success',
-            data:
-                null  
+            status:'Book has been removed from database',
         })
     }catch(err){
         res.status(404).json({
