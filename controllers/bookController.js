@@ -1,5 +1,5 @@
-const Book=require('./bookModel');
-const APIFeatures=require('./apiFeatures');
+const Book=require('../models/bookModel');
+const APIFeatures=require('../utils/apiFeatures');
 exports.getBookByGenre=async(req,res)=>{
     try {
         const genre=req.params.genre;
