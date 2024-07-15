@@ -4,6 +4,8 @@ const validator = require('validator');
 
 const bcrypt = require('bcrypt');
 
+const Book = require('./bookModel');
+
 const userSchema = new mongoose.Schema({
     name:{
         type:String,
@@ -35,7 +37,11 @@ const userSchema = new mongoose.Schema({
         type:String,
         enum: ['user','admin'],
         default:'user'
-    }
+    },
+    wishlist:[{
+        type: mongoose.Schema.ObjectId,
+        ref: 'Book'
+    }]
 },
 {timestamps:true}
 )

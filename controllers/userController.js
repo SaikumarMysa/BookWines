@@ -1,3 +1,4 @@
+const Book = require('../models/bookModel');
 const User = require('./../models/userModel');
 
 const jwt = require('jsonwebtoken');
@@ -93,3 +94,38 @@ exports.deleteMe = async(req,res) =>{
         status: 'User Deleted'
     })
 };
+
+//wishlist
+
+exports. getWishlist = async(req,res) =>{
+    const user = await User.findById(req.user.id);
+    var wishlist = user.wishlist;
+    res.status(200).json({
+        status: 'Your Wishlist is here',
+        data:{
+            wishlist
+        }
+    })
+}
+
+exports.addToWishlist = async (req,res) =>{
+    const wishlistAdded= await User.findByIdAndUpdate(req.user.id,{$push:{wishlist:req.body.bookId}},
+    
+        {new: true, runValidators: true});
+        var myWishlist = wishlistAdded.wishlist;
+        res.status(200).json({
+            status: 'Book added to wishlist',
+            data:{
+                myWishlist
+            }
+        })
+}
+
+exports.removeFromWishlist = async (req,res) =>{
+    const wishlistRemoved= await User.findByIdAndUpdate(req.user.id,{$pull:{wishlist:req.body.bookId}},
+        {new: true, runValidators: true});
+        // var myWishlist = wishlistRemoved.wishlist;
+        res.status(200).json({
+            status: 'Book removed from wishlist',
+        })
+}
