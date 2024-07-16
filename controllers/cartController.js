@@ -16,7 +16,7 @@ exports.addToCart = async(req,res) =>{
         let itemIndex = cart.items.findIndex(p=>p.itemId.toString() === itemId);
         if(itemIndex > -1){
             //simply update the item quatity, price, totalPrice
-            cart.items[itemIndex].quantity+=quantity;
+            cart.items[itemIndex].quantity+= quantity;
             cart.items[itemIndex].price = book.price;
             cart.items[itemIndex].total = cart.items[itemIndex].quantity*book.price;
         }else{
@@ -48,7 +48,7 @@ exports.addToCart = async(req,res) =>{
 }
 
 //Get cart
-exports.getCart = async(req, res)=>{
+exports.goToCart = async(req, res)=>{
     const userId = req.user.id;
     const cart = await Cart.findOne({userId});
     res.status(200).json({
