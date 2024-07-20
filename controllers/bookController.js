@@ -1,6 +1,6 @@
-const Book=require('../models/bookModel');
+const ApiFeatures = require('./../utils/apiFeatures.js');
 
-const APIFeatures=require('../utils/apiFeatures');
+const Book = require('./../models/bookModel');
 
 exports.getBookByGenre=async(req,res)=>{
     try {
@@ -75,26 +75,57 @@ exports.getBookStats=async(req,res)=>{
         
     }
 }
-//Retrieve All Books
+
+//prices: high-low
+exports.pricesHighToLow = (req, res, next) =>{
+    req.query.sort = '-price';
+    next();
+}
+
+//prices: low-high
+exports.pricesLowToHigh = (req, res, next) =>{
+    req.query.sort = 'price'
+    next();
+}
+
+//most populator books(top rated)
+exports.mostPopular = (req, res, next) =>{
+   
+    req.query.sort = '-ratings';
+    req.query.limit = '5';
+    next();
+}
+//Retrieve All Books:
+
 exports.getAllBooks = async(req,res) => {
+
     try {
-      const features = new APIFeatures(Book.find(),req.query)
-      .filter()
-      .sort()
-      .limitFields()
-      .paginate()
-      let books = await features.query
+
+        const features = new ApiFeatures(Book.find(), req.query).filter().sort().limitFields().paginate()
+
+        const books = await features.query;
+
         res.status(200).json({
+
             status: 'success',
+
             results: books.length,
+
             data: {
+
                 books
+
             }
         })
-    } catch (err) {
-        res.status(404).json({
+
+    }catch (err) {
+
+            res.status(404).json({
+
             status: 'fail',
+
             message: err.message
+
         })
     }
 }
