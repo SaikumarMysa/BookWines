@@ -90,11 +90,11 @@ exports.pricesLowToHigh = (req, res, next) =>{
 
 //most populator books(top rated)
 exports.mostPopular = (req, res, next) =>{
-   
     req.query.sort = '-ratings';
     req.query.limit = '5';
     next();
 }
+
 //Retrieve All Books:
 
 exports.getAllBooks = async(req,res) => {
