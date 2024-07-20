@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.route('/book-stats').get(bookController.getBookStats);
 
-router.route('/books-by-genre/:genre').get(bookController.getBookByGenre)
+router.route('/getByGenre/:genre').get(bookController.getBookByGenre)
 
 router
 .route('/price-high-low').get(bookController.pricesHighToLow, bookController.getAllBooks)

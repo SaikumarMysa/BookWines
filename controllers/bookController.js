@@ -2,37 +2,26 @@ const ApiFeatures = require('./../utils/apiFeatures.js');
 
 const Book = require('./../models/bookModel');
 
-exports.getBookByGenre=async(req,res)=>{
+exports.getAgg=async(req,res)=>{
     try {
         const genre = req.params.genre;
         const books = await Book.aggregate([
-            {
-                $unwind:'$genre'
-            },
-            {
-                $match:{genre:genre}
-            }
-            ,
+            
             {
                 $group:{
-                    _id:'$genre',
-                    count:{$sum:1},
-                    books:{$push:'$title'}
-                }
-            },
-            {
-                $project:{"genre":1,"books":1}
+                    _id:"$title",
                     
-            },
-            {
-                $sort:{count:-1}
-                //descending order of results
+
+                   
+                }
             }
+            
         ])
         res.status(200).json({
             status:'success',
             data:{
                 Results: books.length,
+
                 books
             }
         })   
@@ -43,9 +32,11 @@ exports.getBookByGenre=async(req,res)=>{
         })
     }
 }
+//Book-stats
+exports.getBookStats =async(req,res)=>{
 
-exports.getBookStats=async(req,res)=>{
     try {
+
         const stats=await Book.aggregate([
             {
                 $match:{ratings:{$gte:4.5}}
@@ -54,10 +45,13 @@ exports.getBookStats=async(req,res)=>{
                 $group:{
                     _id:null,
                     numBooks:{$sum:1},
-                    avgRating:{$avg:'$ratings'},
-                    avgPrice:{$avg:'$price'},
                     minPrice:{$min:'$price'},
-                    maxPrice:{$max:'$price'}
+                    maxPrice:{$max:'$price'},
+                    avgPrice:{$avg:'$price'},
+                    topRating:{$max:"$ratings"},
+                    avgRating:{$avg:'$ratings'},
+                    
+                    
                 }
             }
         ]);
@@ -76,6 +70,65 @@ exports.getBookStats=async(req,res)=>{
     }
 }
 
+// Aggregation:2 
+// getBookByGenre
+exports.getBookByGenre = async(req,res)=>{
+
+    const genre = req.params.genre;
+
+    try {
+
+        const books = await Book.aggregate([
+        
+            {
+                $unwind:"$genre"
+            },
+            {
+                $group:{
+                    _id:"$genre",
+                    totalBooks:{$sum:1},
+                    books:{$push:"$title"}
+                }
+            },
+            {
+                $addFields:{
+                    genre:"$_id"
+                }
+            },
+            {
+                $project:{
+                    _id:0
+                }
+            },
+            {
+                $sort:{
+                    totalBooks:-1
+                }
+            },
+            {
+                $match:{genre:genre}
+            }
+           
+        ]);
+        res.status(200).json({
+            status:'success',
+            results: books.length,
+            data:{
+                books
+            }
+        })
+    } catch (err) {
+        res.status(404).json({
+            status:'fail',
+            message:err.message
+        })
+        
+    }
+}
+
+
+
+
 //prices: high-low
 exports.pricesHighToLow = (req, res, next) =>{
     req.query.sort = '-price';
@@ -84,15 +137,22 @@ exports.pricesHighToLow = (req, res, next) =>{
 
 //prices: low-high
 exports.pricesLowToHigh = (req, res, next) =>{
+
     req.query.sort = 'price'
+
     next();
+
 }
 
 //most populator books(top rated)
 exports.mostPopular = (req, res, next) =>{
+
     req.query.sort = '-ratings';
+
     req.query.limit = '5';
+
     next();
+    
 }
 
 //Retrieve All Books:
@@ -101,7 +161,21 @@ exports.getAllBooks = async(req,res) => {
 
     try {
 
-        const features = new ApiFeatures(Book.find(), req.query).filter().sort().limitFields().paginate()
+        const{title, author} = req.query;
+
+        let filter = {};
+
+        if(title){
+            
+            filter.title = { $regex: title, $options: 'i' };
+        }
+
+        if(author){
+
+            filter.author = { $regex: author, $options: 'i' };
+        }
+
+        const features = new ApiFeatures(Book.find(filter), req.query).filter().sort().limitFields().paginate()
 
         const books = await features.query;
 

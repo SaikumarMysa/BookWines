@@ -13,10 +13,10 @@ const bookSchema = new mongoose.Schema({
         type:String,
         required:[true,'A book must have a language']
     },
-    genre:{
+    genre:[{
         type:String,
         required:true
-    },
+    }],
     pages:{
         type:Number,
         required:[true,'A book must consist number of pages']
