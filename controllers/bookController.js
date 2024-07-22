@@ -267,7 +267,7 @@ exports.updateBook = async(req,res)=>{
 //Delete
 exports.deleteBook = async(req,res)=>{
     try{
-        const book = await Book.findByIdAndDelete(req.params.id);
+        const book = await Book.findByIdAndUpdate(req.params.id,{active:false},{new:true, runValidators: true});
         res.status(200).json({
             status:'Book has been removed from database',
         })

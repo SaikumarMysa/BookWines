@@ -38,7 +38,30 @@ const bookSchema = new mongoose.Schema({
     description:{
         type:String,
         trim:true
+    },
+    active:{
+        type:Boolean,
+        default:true,
+        select:false
     }
+},
+{
+    toJSON:{virtuals:true},
+    toObject:{virtuals:true}
 })
+
+//virtuals:
+bookSchema.virtual('publishedYear').get (function(){
+    return new Date().getFullYear();
+})
+
+//queryMiddleware:
+bookSchema.pre(/^find/, function(next){
+    this.find({active:{$ne:false}});
+    next();
+})
+
+
+
 const Book = mongoose.model('Book',bookSchema);
 module.exports = Book;
